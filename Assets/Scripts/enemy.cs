@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
-    public GameObject Player;
     public float movementSpeed = 10f;
     public GameObject shot;
 
-    private int healthIndicator = 5;
+    private GameObject Player;
+    private int healthIndicator = 1;
     private float timer = 5f;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        Player = GameObject.Find("drone");
     }
 
     // Update is called once per frame
@@ -36,6 +36,7 @@ public class enemy : MonoBehaviour
                 backShotTmp.transform.position = shot.transform.position;
                 backShotTmp.gameObject.tag = "shotEnemy";
                 backShotTmp.SetActive(true);
+                backShotTmp.transform.LookAt(Player.transform);
                 backShotTmp.GetComponent<Rigidbody>().velocity = transform.forward * 200f;
                 backShotTmp.transform.parent = null;
                 backShotTmp.transform.localScale = new Vector3(2, 2, 2);
@@ -44,10 +45,11 @@ public class enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision other)
     {
 
-        if (other.tag == "shot")
+        if (other.gameObject.tag == "shot")
         {
             healthIndicator--;
 
@@ -57,7 +59,7 @@ public class enemy : MonoBehaviour
             }
         }
 
-        else if (other.tag == "player1")
+        else if (other.gameObject.tag == "player1")
         {
             Destroy(gameObject);
         }

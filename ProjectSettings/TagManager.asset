@@ -8,6 +8,8 @@ TagManager:
   - player1
   - Fire
   - shotEnemy
+  - FxTemporaire
+  - enemy
   layers:
   - Default
   - TransparentFX
